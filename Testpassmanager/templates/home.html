@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2 style="text-align: center; color: #2c3e50;">Your Passwords</h2>
+
+    <div class="actions">
+        <a href="/add" class="btn">Add Password</a>
+        <a href="/logout" class="btn" style="background-color: #e74c3c;">Logout</a>
+    </div>
+
+    {% if passwords %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Website</th>
+                    <th>Username</th>
+                    <th>Password Hash</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for website, username, pwd_hash, id in passwords %}
+                <tr>
+                    <td>{{ website }}</td>
+                    <td>{{ username }}</td>
+                    <td style="font-family: monospace; font-size: 0.8em;">{{ pwd_hash }}</td>
+                    <td>
+                        <form action="/send_entry/{{ id }}" method="POST" style="margin: 0;">
+                            <button type="submit" style="background-color: #27ae60;">Send to Backend</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p style="text-align: center;">No passwords stored yet.</p>
+    {% endif %}
+{% endblock %}
